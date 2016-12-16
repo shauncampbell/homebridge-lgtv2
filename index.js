@@ -94,11 +94,15 @@ function LGTv2(log, config, api) {
     .setCharacteristic(Characteristic.Manufacturer, 'LG Electronics Inc.')
     .setCharacteristic(Characteristic.Model, 'webOS TV')
     .setCharacteristic(Characteristic.SerialNumber, '-')
+
+  this.log("Initialized LGTV")
+	
 }
 
 LGTv2.prototype.connect = function(callback) {
   var self = this
   var cb = false
+  this.log("Connecting to LGTV")
   var lgtv = require('lgtv2')({
     url: 'ws://' + this.ip + ':3000',
     keyFile: this.keyFile,
@@ -122,15 +126,21 @@ LGTv2.prototype.connect = function(callback) {
       return callback(null, lgtv)
     }
   })
+  
+  this.log("Connected to LGTV")
 }
 
 LGTv2.prototype.getState = function(callback) {
   var self = this
+  
+  this.log("Getting LGTV State")
   ping.sys.probe(this.ip, function(isAlive) {
     if (!isAlive) {
+      this.log("LGTV is not alive")
       self.powered = false
       return callback(null, false)
     } else {
+      this.log("LGTV is alive")
       self.powered = true
       return callback(null, true)
     }
@@ -184,6 +194,7 @@ LGTv2.prototype.getChannelName = function(callback) {
 
 LGTv2.prototype.identify = function(callback) {
   var self = this
+  this.log("LGTV is being identified")
   if (this.powered) {
     this.connect(function(err, lgtv) {
       if (err) return callback(err)
