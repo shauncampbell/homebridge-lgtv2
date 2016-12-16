@@ -113,6 +113,7 @@ LGTv2.prototype.connect = function(callback) {
     self.log('This is your LGTv2 key: '+key)
   })
   lgtv.on('error', function() {
+	  self.log("lg tv error")
     self.powered = false
     if (!cb) {
       cb = true
@@ -120,6 +121,7 @@ LGTv2.prototype.connect = function(callback) {
     }
   })
   lgtv.on('connect', function() {
+	  self.log("lg tv connect")
     self.powered = true
     if (!cb) {
       cb = true
@@ -148,6 +150,7 @@ LGTv2.prototype.getState = function(callback) {
 }
 
 LGTv2.prototype.getVolume = function(callback) {
+	this.log("Getting volume")
   var self = this
   if (this.powered) {
     this.connect(function(err, lgtv) {
@@ -163,6 +166,7 @@ LGTv2.prototype.getVolume = function(callback) {
 }
 
 LGTv2.prototype.getChannelNumber = function(callback) {
+	this.log("Getting channel number")
   var self = this
   if (this.powered) {
     this.connect(function(err, lgtv) {
@@ -178,6 +182,7 @@ LGTv2.prototype.getChannelNumber = function(callback) {
 }
 
 LGTv2.prototype.getChannelName = function(callback) {
+	this.log("Getting channel name")
   var self = this
   if (this.powered) {
     this.connect(function(err, lgtv) {
@@ -211,6 +216,7 @@ LGTv2.prototype.identify = function(callback) {
 }
 
 LGTv2.prototype.checkInterval = function(callback) {
+	this.log("check interval")
   var self = this
   ping.sys.probe(this.ip, function(isAlive) {
     if (!isAlive) {
@@ -224,6 +230,7 @@ LGTv2.prototype.checkInterval = function(callback) {
 }
 
 LGTv2.prototype.setVolume = function(state, callback) {
+	this.log("Setting volume")
   var self = this
   if (this.powered) {
     this.connect(function(err, lgtv) {
@@ -241,6 +248,7 @@ LGTv2.prototype.setVolume = function(state, callback) {
 }
 
 LGTv2.prototype.setChannelNumber = function(state, callback) {
+	this.log("Setting channel number")
   var self = this
   if (this.powered) {
     return callback(null, true)
@@ -250,6 +258,7 @@ LGTv2.prototype.setChannelNumber = function(state, callback) {
 }
 
 LGTv2.prototype.setState = function(state, callback) {
+	this.log("Setting state")
   var self = this
   if (state) {
     if (this.powered) {
@@ -276,6 +285,7 @@ LGTv2.prototype.setState = function(state, callback) {
 }
 
 LGTv2.prototype.getServices = function() {
+	this.log("Getting services")
   return [
     this.service,
     this.accessoryInformationService
